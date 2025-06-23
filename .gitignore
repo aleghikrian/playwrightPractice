@@ -1,5 +1,8 @@
 # Ignore env files
 .env
+*.log
+*.snap
+*.json
 
 # Playwright
 node_modules/
