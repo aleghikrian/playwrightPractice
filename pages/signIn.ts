@@ -102,7 +102,10 @@ export class Login extends Base {
       await this.password.fill(password);
     }
     await this.loginConfirmation.click();
+
+
   }
 
-  constoopsCode=()=>{console.log("huskyyyy")}
+  notFormatted(){console.log("ok")}
+  
 }
