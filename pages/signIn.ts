@@ -61,14 +61,14 @@ export class Login extends Base {
     await this.stateName.fill(process.env.STATE_NAME || "DefaultStateName");
     await this.countryDropdown.selectOption("AX");
     await this.phoneNumber.fill(
-      process.env.PHONE_NUMBER || "DefaultPhoneNumber"
+      process.env.PHONE_NUMBER || "DefaultPhoneNumber",
     );
     await this.emailAddress.fill(
-      process.env.EMAIL_ADDRESS || "DefaultEmailAddress"
+      process.env.EMAIL_ADDRESS || "DefaultEmailAddress",
     );
 
     await this.password.fill(
-      process.env.PASSWORD || "D3faultPasswordThatWillWorkPlease!"
+      process.env.PASSWORD || "D3faultPasswordThatWillWorkPlease!",
     );
   }
 
@@ -80,10 +80,10 @@ export class Login extends Base {
   /* This uses an already created user to login into the application */
   async loginCreatedUser() {
     await this.emailAddress.fill(
-      process.env.EMAIL_ADDRESS || "DefaultEmailAddress"
+      process.env.EMAIL_ADDRESS || "DefaultEmailAddress",
     );
     await this.password.fill(
-      process.env.PASSWORD || "D3faultPasswordThatWillWorkPlease!"
+      process.env.PASSWORD || "D3faultPasswordThatWillWorkPlease!",
     );
     await this.loginConfirmation.click();
   }
@@ -102,10 +102,8 @@ export class Login extends Base {
       await this.password.fill(password);
     }
     await this.loginConfirmation.click();
-
-
   }
 
-  notFormatted(){console.log("ok")}
-  
+  whoaNow(){console.log("clean me please")}
+
 }
