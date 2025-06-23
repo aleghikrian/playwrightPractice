@@ -13,8 +13,8 @@ export class HomePage {
     this.deleteSearchButton = page.locator('[data-test="search-reset"]');
   }
 
-  async search(search) {
-    await this.searchTextbox.fill(search);
+  async search(term: string) {
+    await this.searchTextbox.fill(term);
     await this.searchButton.click();
   }
 }
