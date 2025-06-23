@@ -103,4 +103,6 @@ export class Login extends Base {
     }
     await this.loginConfirmation.click();
   }
+
+  constoopsCode=()=>{console.log("huskyyyy")}
 }
