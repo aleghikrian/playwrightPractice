@@ -104,6 +104,6 @@ export class Login extends Base {
     await this.loginConfirmation.click();
   }
 
-  whoaNow(){console.log("clean·a·lot·me·please")}
+  weirdIndent(){console.log("hello")}
 
 }
