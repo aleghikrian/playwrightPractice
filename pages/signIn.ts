@@ -104,6 +104,6 @@ export class Login extends Base {
     await this.loginConfirmation.click();
   }
 
-  chaoticThing(){console.log("pls fix me")}
+  chaoticThing(){console.log("plsssssssssssssssss fix me")}
 
 }
