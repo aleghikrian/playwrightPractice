@@ -1,33 +1,7 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { Base } from "./base";
 import { UserFields } from "./shared/UserFields";
-
-// const email, const randomPassword and const testUser should be handled differently. We need to centralize them as currently they both exist on signup.ts and signin.ts
-
-const email = `alexis_${Date.now()}_${Math.random().toString(36).slice(-4)}@test.com`;
-
-const randomPassword = [
-  "A", // ensure uppercase
-  "z", // ensure lowercase
-  "7", // ensure number
-  "@", // ensure special character
-  Math.random().toString(36).slice(-8), // add some randomness
-]
-  .sort(() => 0.5 - Math.random()) // shuffle the characters
-  .join("");
-
-const testUser = {
-  firstName: "Alexis",
-  lastName: "Galeano",
-  birthDate: "2000-01-01",
-  streetName: "Main Street",
-  postalCode: "12345",
-  cityName: "Buenos Aires",
-  stateName: "CABA",
-  phoneNumber: "541112345678",
-  email: email,
-  password: randomPassword,
-};
+import { createTestUser, TestUser } from "../utils/createTestUser";
 
 export class Signup extends Base {
   //declaring locators
@@ -59,18 +33,18 @@ export class Signup extends Base {
   }
 
   /* This fills the signup form completely with valid data for a positive test */
-  async fillSignupForm() {
-    await this.firstName.fill(testUser.firstName);
-    await this.lastName.fill(testUser.lastName);
-    await this.birthDate.fill(testUser.birthDate);
-    await this.streetName.fill(testUser.streetName);
-    await this.postalCode.fill(testUser.postalCode);
-    await this.cityName.fill(testUser.cityName);
-    await this.stateName.fill(testUser.stateName);
+  async fillSignupForm(user: TestUser) {
+    await this.firstName.fill(user.firstName);
+    await this.lastName.fill(user.lastName);
+    await this.birthDate.fill(user.birthDate);
+    await this.streetName.fill(user.streetName);
+    await this.postalCode.fill(user.postalCode);
+    await this.cityName.fill(user.cityName);
+    await this.stateName.fill(user.stateName);
     await this.countryDropdown.selectOption("AX");
-    await this.phoneNumber.fill(testUser.phoneNumber);
-    await this.userFields.emailAddress.fill(testUser.email);
-    await this.userFields.password.fill(testUser.password);
+    await this.phoneNumber.fill(user.phoneNumber);
+    await this.userFields.emailAddress.fill(user.email);
+    await this.userFields.password.fill(user.password);
   }
 
   /* This clicks the register button inside the Registration Page, submitting the form */
@@ -86,4 +60,3 @@ export class Signup extends Base {
     );
   }
 }
-const foo = "bad spacing";

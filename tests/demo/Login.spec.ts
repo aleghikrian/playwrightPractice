@@ -1,14 +1,16 @@
 import { test, expect } from "@playwright/test";
 import { Base } from "../../pages/base";
 import { Login } from "../../pages/signIn";
+import { createTestUser } from "../../utils/createTestUser";
 
-test("Successfull Login", async ({ page }) => {
+test("@smoke Successfull Login", async ({ page }) => {
   const base = new Base(page);
   const login = new Login(page);
+  const user = createTestUser();
 
   await base.goToHomePage();
   await base.goToSignInPage();
-  await login.loginCreatedUser();
+  await login.loginCreatedUser(user);
 });
 
 test("Invalid Email Format", async ({ page }) => {
@@ -20,7 +22,7 @@ test("Invalid Email Format", async ({ page }) => {
   await login.fillLoginCredentials("no-format");
   await login.validateLoginTextError(
     login.emailError,
-    "Email format is invalid"
+    "Email format is invalid",
   );
 });
 
@@ -43,7 +45,7 @@ test("Password field is required", async ({ page }) => {
   await login.fillLoginCredentials("testemail@test.com");
   await login.validateLoginTextError(
     login.passwordError,
-    "Password is required"
+    "Password is required",
   );
 });
 
@@ -56,6 +58,6 @@ test("Invalid email or password", async ({ page }) => {
   await login.fillLoginCredentials("testemail@email.com", "PerhapsPassword");
   await login.validateLoginTextError(
     login.loginError,
-    "Invalid email or password"
+    "Invalid email or password",
   );
 });

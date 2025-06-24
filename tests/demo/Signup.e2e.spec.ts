@@ -2,11 +2,13 @@ import { test, expect } from "@playwright/test";
 import { Base } from "../../pages/base";
 import { Login } from "../../pages/signIn";
 import { Signup } from "../../pages/signup";
+import { createTestUser } from "../../utils/createTestUser";
 
-test("Successful Signup", async ({ page }) => {
+test("@smoke Successful Signup", async ({ page }) => {
   const base = new Base(page);
   const login = new Login(page);
   const signup = new Signup(page);
+  const user = createTestUser();
 
   await test.step("Navigate to home page", async () => {
     await base.goToHomePage();
@@ -21,7 +23,7 @@ test("Successful Signup", async ({ page }) => {
     await page.waitForLoadState();
   });
   await test.step("Fill the signup form", async () => {
-    await signup.fillSignupForm();
+    await signup.fillSignupForm(user);
   });
   await test.step("Submit the signup form", async () => {
     await signup.confirmSignupForm();
