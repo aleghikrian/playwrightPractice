@@ -2,6 +2,8 @@ import { Page, Locator, expect } from "@playwright/test";
 import { Base } from "./base";
 import { UserFields } from "./shared/UserFields";
 
+// const email, const randomPassword and const testUser should be handled differently. We need to centralize them as currently they both exist on signup.ts and signin.ts
+
 const email = `alexis_${Date.now()}_${Math.random().toString(36).slice(-4)}@test.com`;
 
 const randomPassword = [
