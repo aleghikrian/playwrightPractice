@@ -10,7 +10,7 @@ export class Base {
   }
 
   async goToHomePage() {
-    await this.page.goto("https://practicesoftwaretesting.com/");
+    await this.page.goto("/", { waitUntil: "commit" });
   }
 
   async goToSignInPage() {

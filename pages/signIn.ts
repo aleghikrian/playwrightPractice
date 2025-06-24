@@ -50,7 +50,7 @@ export class Login extends Base {
     await this.registerButton.waitFor({ state: "visible" });
     await this.registerButton.click({ force: true });
   }
-  /* This fills the signup form completely with valid data for a positive test */
+  /* This fills the signup form completely with valid data for a positive test 
   async fillSignupForm() {
     await this.firstName.fill(process.env.FIRST_NAME || "DefaultName");
     await this.lastName.fill(process.env.LAST_NAME || "DefaultLastName");
@@ -72,11 +72,12 @@ export class Login extends Base {
     );
   }
 
-  /* This clicks the register button inside the Registration Page, submitting the form */
+  /* This clicks the register button inside the Registration Page, submitting the form 
   async confirmSignupForm() {
     await this.registerConfirmation.waitFor({ state: "attached" });
-    await this.registerConfirmation.click({ force: true });
-  }
+    await this.registerConfirmation.click({ force: true }); 
+  } */
+
   /* This uses an already created user to login into the application */
   async loginCreatedUser() {
     await this.emailAddress.fill(
@@ -102,9 +103,5 @@ export class Login extends Base {
       await this.password.fill(password);
     }
     await this.loginConfirmation.click();
-  }
-
-  chaoticThing() {
-    console.log("pls fix meeeeeee");
   }
 }
