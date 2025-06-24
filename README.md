@@ -65,11 +65,13 @@ This project runs Playwright tests on every push and pull request to main using 
 
 ### 📁 Folder Structure
 
+<pre>
 .
 ├── pages/ # Page Object Models (Signup, Login, etc.)
 ├── tests/ # Test specs
 ├── utils/ # User generator, shared auth flows
 ├── .github/workflows/ # GitHub Actions config
+</pre>
 
 ---
 
