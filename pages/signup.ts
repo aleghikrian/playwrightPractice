@@ -84,3 +84,4 @@ export class Signup extends Base {
     );
   }
 }
+const foo = "bad spacing";
