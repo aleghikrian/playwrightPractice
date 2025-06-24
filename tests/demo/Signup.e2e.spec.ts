@@ -4,7 +4,7 @@ import { Login } from "../../pages/signIn";
 import { Signup } from "../../pages/signup";
 import { createTestUser } from "../../utils/createTestUser";
 
-test("@smoke Successful Signup", async ({ page }) => {
+test("Successful Signup", async ({ page }) => {
   const base = new Base(page);
   const login = new Login(page);
   const signup = new Signup(page);

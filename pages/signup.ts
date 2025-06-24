@@ -33,18 +33,21 @@ export class Signup extends Base {
   }
 
   /* This fills the signup form completely with valid data for a positive test */
-  async fillSignupForm(user: TestUser) {
-    await this.firstName.fill(user.firstName);
-    await this.lastName.fill(user.lastName);
-    await this.birthDate.fill(user.birthDate);
-    await this.streetName.fill(user.streetName);
-    await this.postalCode.fill(user.postalCode);
-    await this.cityName.fill(user.cityName);
-    await this.stateName.fill(user.stateName);
+  async fillSignupForm(user: Partial<TestUser> = {}) {
+    const defaultUser = createTestUser();
+    const finalUser = { ...defaultUser, ...user };
+
+    await this.firstName.fill(finalUser.firstName);
+    await this.lastName.fill(finalUser.lastName);
+    await this.birthDate.fill(finalUser.birthDate);
+    await this.streetName.fill(finalUser.streetName);
+    await this.postalCode.fill(finalUser.postalCode);
+    await this.cityName.fill(finalUser.cityName);
+    await this.stateName.fill(finalUser.stateName);
     await this.countryDropdown.selectOption("AX");
-    await this.phoneNumber.fill(user.phoneNumber);
-    await this.userFields.emailAddress.fill(user.email);
-    await this.userFields.password.fill(user.password);
+    await this.phoneNumber.fill(finalUser.phoneNumber);
+    await this.userFields.emailAddress.fill(finalUser.email);
+    await this.userFields.password.fill(finalUser.password);
   }
 
   /* This clicks the register button inside the Registration Page, submitting the form */

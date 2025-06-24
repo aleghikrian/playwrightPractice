@@ -1,16 +1,10 @@
 import { test, expect } from "@playwright/test";
 import { Base } from "../../pages/base";
 import { Login } from "../../pages/signIn";
-import { createTestUser } from "../../utils/createTestUser";
+import { registerAndLoginUser } from "../../utils/authUtils";
 
 test("@smoke Successfull Login", async ({ page }) => {
-  const base = new Base(page);
-  const login = new Login(page);
-  const user = createTestUser();
-
-  await base.goToHomePage();
-  await base.goToSignInPage();
-  await login.loginCreatedUser(user);
+  await registerAndLoginUser(page);
 });
 
 test("Invalid Email Format", async ({ page }) => {

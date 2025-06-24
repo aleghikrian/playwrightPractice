@@ -31,7 +31,7 @@ export class Login extends Base {
   /* This uses an already created user to login into the application */
   /* NEED TO REFACTOR. CHANGED BEHAVIOR ON userFields. Deprecated .env so now we need to create a new way to fetch already created users
   This test will not work for now */
-  async loginCreatedUser(user: TestUser) {
+  async loginWithUser(user: TestUser) {
     await this.userFields.emailAddress.fill(user.email);
     await this.userFields.password.fill(user.password);
     await this.loginConfirmation.click();
