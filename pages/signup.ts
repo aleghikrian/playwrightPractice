@@ -1,7 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { Base } from "./base";
-import dotenv from "dotenv";
-dotenv.config();
+import { UserFields } from "./shared/UserFields";
 
 const email = `alexis_${Date.now()}_${Math.random().toString(36).slice(-4)}@test.com`;
 
@@ -39,12 +38,12 @@ export class Signup extends Base {
   readonly stateName: Locator;
   readonly countryDropdown: Locator;
   readonly phoneNumber: Locator;
-  readonly emailAddress: Locator;
-  readonly password: Locator;
   readonly registerConfirmation: Locator;
+  readonly userFields: UserFields;
 
   constructor(page: Page) {
     super(page);
+    this.userFields = new UserFields(page);
     this.firstName = page.locator('[data-test="first-name"]');
     this.lastName = page.locator('[data-test="last-name"]');
     this.birthDate = page.locator('[data-test="dob"]');
@@ -54,8 +53,6 @@ export class Signup extends Base {
     this.stateName = page.locator('[data-test="state"]');
     this.countryDropdown = page.locator('[data-test="country"]');
     this.phoneNumber = page.locator('[data-test="phone"]');
-    this.emailAddress = page.locator('[data-test="email"]');
-    this.password = page.locator('[data-test="password"]');
     this.registerConfirmation = page.locator('[data-test="register-submit"]');
   }
 
@@ -70,8 +67,8 @@ export class Signup extends Base {
     await this.stateName.fill(testUser.stateName);
     await this.countryDropdown.selectOption("AX");
     await this.phoneNumber.fill(testUser.phoneNumber);
-    await this.emailAddress.fill(testUser.email);
-    await this.password.fill(testUser.password);
+    await this.userFields.emailAddress.fill(testUser.email);
+    await this.userFields.password.fill(testUser.password);
   }
 
   /* This clicks the register button inside the Registration Page, submitting the form */
