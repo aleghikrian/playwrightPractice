@@ -1,8 +1,31 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { Base } from "./base";
-import dotenv from "dotenv";
-import { exists } from "fs";
-dotenv.config();
+import { UserFields } from "./shared/UserFields";
+
+const email = `alexis_${Date.now()}_${Math.random().toString(36).slice(-4)}@test.com`;
+
+const randomPassword = [
+  "A", // ensure uppercase
+  "z", // ensure lowercase
+  "7", // ensure number
+  "@", // ensure special character
+  Math.random().toString(36).slice(-8), // add some randomness
+]
+  .sort(() => 0.5 - Math.random()) // shuffle the characters
+  .join("");
+
+const testUser = {
+  firstName: "Alexis",
+  lastName: "Galeano",
+  birthDate: "2000-01-01",
+  streetName: "Main Street",
+  postalCode: "12345",
+  cityName: "Buenos Aires",
+  stateName: "CABA",
+  phoneNumber: "541112345678",
+  email: email,
+  password: randomPassword,
+};
 
 export class Login extends Base {
   //Declaring locators
@@ -16,16 +39,16 @@ export class Login extends Base {
   readonly stateName: Locator;
   readonly countryDropdown: Locator;
   readonly phoneNumber: Locator;
-  readonly emailAddress: Locator;
-  readonly password: Locator;
   readonly registerConfirmation: Locator;
   readonly loginConfirmation: Locator;
   readonly emailError: Locator;
   readonly passwordError: Locator;
   readonly loginError: Locator;
+  readonly userFields: UserFields;
 
   constructor(page: Page) {
     super(page);
+    this.userFields = new UserFields(page);
     this.registerButton = page.locator('[data-test="register-link"]');
     this.firstName = page.locator("input#firstName");
     this.lastName = page.locator('[data-test="last-name"]');
@@ -36,8 +59,6 @@ export class Login extends Base {
     this.stateName = page.locator('[data-test="state"]');
     this.countryDropdown = page.locator('[data-test="country"]');
     this.phoneNumber = page.locator('[data-test="phone"]');
-    this.emailAddress = page.locator('[data-test="email"]');
-    this.password = page.locator('[data-test="password"]');
     this.registerConfirmation = page.locator('[data-test="register-submit"]');
     this.loginConfirmation = page.locator('[data-test="login-submit"]');
     this.emailError = page.locator('[data-test="email-error"]');
@@ -50,42 +71,13 @@ export class Login extends Base {
     await this.registerButton.waitFor({ state: "visible" });
     await this.registerButton.click({ force: true });
   }
-  /* This fills the signup form completely with valid data for a positive test 
-  async fillSignupForm() {
-    await this.firstName.fill(process.env.FIRST_NAME || "DefaultName");
-    await this.lastName.fill(process.env.LAST_NAME || "DefaultLastName");
-    await this.birthDate.fill(process.env.BIRTH_DATE || "DefaultBirthDate");
-    await this.streetName.fill(process.env.STREET_NAME || "DefaultStreetName");
-    await this.postalCode.fill(process.env.POSTAL_CODE || "DefaultPostalCode");
-    await this.cityName.fill(process.env.CITY_NAME || "DefaultCityName");
-    await this.stateName.fill(process.env.STATE_NAME || "DefaultStateName");
-    await this.countryDropdown.selectOption("AX");
-    await this.phoneNumber.fill(
-      process.env.PHONE_NUMBER || "DefaultPhoneNumber",
-    );
-    await this.emailAddress.fill(
-      process.env.EMAIL_ADDRESS || "DefaultEmailAddress",
-    );
-
-    await this.password.fill(
-      process.env.PASSWORD || "D3faultPasswordThatWillWorkPlease!",
-    );
-  }
-
-  /* This clicks the register button inside the Registration Page, submitting the form 
-  async confirmSignupForm() {
-    await this.registerConfirmation.waitFor({ state: "attached" });
-    await this.registerConfirmation.click({ force: true }); 
-  } */
 
   /* This uses an already created user to login into the application */
+  /* NEED TO REFACTOR. CHANGED BEHAVIOR ON userFields. Deprecated .env so now we need to create a new way to fetch already created users
+  This test will not work for now */
   async loginCreatedUser() {
-    await this.emailAddress.fill(
-      process.env.EMAIL_ADDRESS || "DefaultEmailAddress",
-    );
-    await this.password.fill(
-      process.env.PASSWORD || "D3faultPasswordThatWillWorkPlease!",
-    );
+    await this.userFields.emailAddress.fill(testUser.email);
+    await this.userFields.password.fill(testUser.email);
     await this.loginConfirmation.click();
   }
 
@@ -98,9 +90,9 @@ export class Login extends Base {
 
   /* Created a reusable function to fill either email or both email and password fields */
   async fillLoginCredentials(email: string, password?: string) {
-    await this.emailAddress.fill(email);
+    await this.userFields.emailAddress.fill(email);
     if (password) {
-      await this.password.fill(password);
+      await this.userFields.password.fill(password);
     }
     await this.loginConfirmation.click();
   }

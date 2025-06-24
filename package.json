@@ -12,10 +12,11 @@
     "prepare": "npm exec husky install"
   },
   "lint-staged": {
-    "*.ts?(x)": [
+    "*.{ts,tsx}": [
+      "eslint --fix",
       "prettier --write"
     ],
-    "**/*.ts?(x)": [
+    "*.{js,jsx,json,md}": [
       "prettier --write"
     ]
   },
