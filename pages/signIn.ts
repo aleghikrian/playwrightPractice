@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from "@playwright/test";
+import { Page, Locator, expect, APIRequestContext } from "@playwright/test";
 import { Base } from "./base";
 import { UserFields } from "./shared/UserFields";
 import { createTestUser, TestUser } from "../utils/createTestUser";
@@ -20,6 +20,31 @@ export class Login extends Base {
     this.emailError = page.locator('[data-test="email-error"]');
     this.passwordError = page.locator('[data-test="password-error"]');
     this.loginError = page.locator('[data-test="login-error"]');
+  }
+  // generate an API call for login. This is unusable right now, as the test page does not have a real API behind
+  static async apiLogin(request: APIRequestContext, user: TestUser) {
+    const response = await request.post(
+      "https://practicesoftwaretesting.com/api/auth/login",
+      {
+        data: {
+          email: user.email,
+          password: user.password,
+        },
+      },
+    );
+
+    expect(response.status()).toBe(200);
+
+    console.log("Response status:", response.status());
+    console.log("Response URL:", response.url());
+
+    //const body = await response.json();
+    //expect(body).toHaveProperty("token");
+
+    const raw = await response.text();
+    console.log("Raw response:", raw);
+
+    return raw;
   }
 
   /* This click the register button inside the Login Page */
